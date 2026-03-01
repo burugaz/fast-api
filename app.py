@@ -48,12 +48,22 @@ async def check_adult(user: UserWithAge):
     }
 
 # №2.1
-feedbacks = []
+messages_list = []
 
 @app.post("/feedback")
-async def create_feedback(feedback: Feedback):
-    feedbacks.append(feedback)
+async def create_feedback(message: Feedback):
+    messages_list.append(message)
 
     return {
-        "message": f"Feedback received. Thank you, {feedback.name}."
+        "message": f"Feedback received. Thank you, {message.name}."
+    }
+
+# №2.2*
+feedbacks_list = []
+
+@app.post("/task_2_2/feedback", tags=["Task_2_2"])
+async def task_2_2(feedback: Feedback):
+    messages_list.append(feedback.model_dump())
+    return {
+        "message": "Спасибо, {name}! Ваш отзыв сохранён."
     }
