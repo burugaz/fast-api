@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-from models import User, UserWithAge
+from models import User, UserWithAge, Feedback
 
 app = FastAPI()
 
@@ -45,4 +45,15 @@ async def check_adult(user: UserWithAge):
         "name": user.name,
         "age": user.age,
         "is_adult": is_adult
+    }
+
+# №2.1
+feedbacks = []
+
+@app.post("/feedback")
+async def create_feedback(feedback: Feedback):
+    feedbacks.append(feedback)
+
+    return {
+        "message": f"Feedback received. Thank you, {feedback.name}."
     }
